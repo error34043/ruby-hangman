@@ -122,6 +122,18 @@ module Instructions
   end
 
   def introduction
+    
+  end
 
+  def welcome(name)
+    "Hello, #{name.bg_blue}!"
+  end
+
+  def win(word)
+    puts "Congratulations! You guessed #{word.green}."
+  end
+
+  def lose(word)
+    puts "You lost! The word was #{word.red}."
   end
 end
