@@ -15,7 +15,6 @@ class Game
   @all_guesses = []
   @wrong_guesses = []
   @guesses_left = 0
-  @win = false
 
   def initialize
     @blanks = []
@@ -30,16 +29,22 @@ class Game
     wordfile.close
     @random_word = random_words_array.sample.upcase
     @random_word_array = @random_word.split('')
-    @random_word
   end
 
   def random_movie_generator
     wordfile = File.open('movielist.txt', 'r')
-    random_movies_array = wordfile.readlines.map { |word| word.chomp }
+    random_movies_array = wordfile.readlines.map { |movie| movie.chomp }
     wordfile.close
     @random_word = random_movies_array.sample.upcase
     @random_word_array = @random_word.split('')
-    @random_word
+  end
+
+  def random_name_generator
+    wordfile = File.open('namelist.txt', 'r')
+    random_names_array = wordfile.readlines.map { |name| name.chomp }
+    wordfile.close
+    @random_word = random_names_array.sample.upcase
+    @random_word_array = @random_word.split('')
   end
 
   def blanks_on_start
@@ -61,20 +66,6 @@ class Game
     end
   end
 
-  def show_blanks(guess = nil)
-    if guess.nil?
-      blanks_on_start
-    elsif @random_word_array.include? guess
-      blanks_per_turn(guess)
-    else
-      @number_wrong += 1
-      @wrong_guesses.push(guess)
-      @blanks
-    end
-    guesses_remaining_count
-    @blanks
-  end
-
   def valid_input?(guess)
     if guess.length == 1 && guess.match?(/[A-Z]/)
       if @all_guesses.include? guess
@@ -88,6 +79,16 @@ class Game
       puts "\nPlease enter a single alphabet."
       false
     end
+  end
+
+  def check_guess(guess)
+    if @random_word_array.include? guess
+      blanks_per_turn(guess)
+    else
+      @number_wrong += 1
+      @wrong_guesses.push(guess)
+    end
+    guesses_remaining_count
   end
 
   def recieve_guess
@@ -145,9 +146,10 @@ class Game
 
   def turn
     guess = recieve_guess
+    check_guess(guess)
     puts "\n\n\n"
-    puts show_blanks(guess).join
     puts image_to_display(@number_wrong)
+    puts @blanks.join
     puts "Number wrong: #{@number_wrong}, guesses left: #{@guesses_left}"
     puts "Wrong guesses: #{@wrong_guesses.join(' ').red}"
   end
@@ -156,14 +158,19 @@ class Game
     puts "Would you like to guess a random word or the title of movie?"
     puts "1. Random word"
     puts "2. Title of a movie"
+    puts "3. Name of a person"
     loop do
-      print "[Your choice]: "
+      print "[1/2/3]: "
       input = gets.chomp.to_i
-      if input == 1
-        @random_word = random_word_generator
+      case input
+      when 1
+        random_word_generator
         break
-      elsif input == 2
-        @random_word = random_movie_generator
+      when 2
+        random_movie_generator
+        break
+      when 3 
+        random_name_generator
         break
       else
         puts "I'm sorry, what was that?"
@@ -177,7 +184,7 @@ class Game
     decide_play_mode
     @guesses_left = @random_word.length
     puts image_to_display(0)
-    puts show_blanks.join
+    puts blanks_on_start.join
     continue_play?
   end
 
