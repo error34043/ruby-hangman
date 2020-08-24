@@ -107,7 +107,7 @@ module HangedMan
 end
 
 # Contains methods that display instructions
-module Instructions
+module Instructable
   def logo
     "     ██░ ██  ▄▄▄      ███▄     █  ▄████  ███▄ ▄███▓  ▄▄▄       ███▄    █ 
     ▓██░ ██▒▒████▄     ██ ▀█   █  ██▒ ▀█▒▓██▒▀█▀ ██▒▒████▄     ██ ▀█   █ 
