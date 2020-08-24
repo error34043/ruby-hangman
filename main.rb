@@ -1,23 +1,23 @@
 # frozen-string-literal: true
 
+require 'json'
 require_relative 'pretty.rb'
-require_relative 'gameplay.rb'
+require_relative 'saveable.rb'
+require_relative 'playable.rb'
 
 class Game < Gameplay
-  include Instructions
+  include Saveable
+  include Instructable
   include HangedMan
 
   def match
-    continue = start
-    while continue
-      turn
-      continue = continue_play?
+    game_type = new_or_saved_game
+    if game_type == 1
+      @continue = new_game_start
+    elsif game_type == 2
+      load_game
     end
-    if @number_wrong == 6
-      lose(@random_word)
-    else
-      win(@random_word)
-    end
+    play_game
   end
 
   private
@@ -29,7 +29,7 @@ class Game < Gameplay
     @wrong_guesses = []
   end
 
-  def new_or_saved_game ####################INCOMPLETE
+  def new_or_saved_game
     pass = false
     puts "Would you like to:"
     puts "1. Start a new game"
@@ -45,41 +45,20 @@ class Game < Gameplay
     end
   end
 
-  def play_new_game
-
-  end
-
-  def play_saved_game
-
-  end
-
   def save_game
-    Dir.makedir('saves') unless Dir.exist?('saves')
-    saves = load_saves
-    current_game = {
-      'player_name' => @player_name,
-      'random_word' => @random_word,
-      'random_word_array' => @random_word_array,
-      'blanks' => @blanks,
-      'number_wrong' => @number_wrong,
-      'all_guesses' => @all_guesses,
-      'wrong_guesses' => @wrong_guesses,
-      'guesses_left' => @guesses_left,
-      'mode' => @mode
-    }
-    saves.push(current_game)
-    serialized = Marshal.dump(saves)
-    File.open('saves/saves.txt', 'w') do |file|
-      file.puts serialized
-    end
+    File.open('saved.txt', 'w') { |file| file.puts serialize }
+    puts "The game has been saved!"
+    exit
   end
 
-  def load_saves
-    if File.exist? 'saves/saves.txt'
-      saved_games = File.read('saves/saves.txt')
-      saves = Marshal.load(saved_games)
-    else
-      []
+  def load_game
+    if File.exist?'saved.txt'
+      saved_game = File.read 'saved.txt'
+      unserialize(saved_game)
+      puts "Welcome back, #{@player_name}!\n\n"
+      puts image_to_display(@number_wrong)
+      puts @blanks.join
+      puts "\n"
     end
   end
 end
