@@ -11,6 +11,8 @@ class Game < Gameplay
   include HangedMan
 
   def match
+    puts logo
+    puts introduction
     game_type = new_or_saved_game
     if game_type == 1
       @continue = new_game_start
@@ -59,6 +61,7 @@ class Game < Gameplay
       puts image_to_display(@number_wrong)
       puts @blanks.join
       puts "\n"
+      feedback(@number_wrong, @guesses_left, @wrong_guesses)
     end
   end
 end

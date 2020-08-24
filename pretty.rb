@@ -109,31 +109,54 @@ end
 # Contains methods that display instructions
 module Instructable
   def logo
-    "     ██░ ██  ▄▄▄      ███▄     █  ▄████  ███▄ ▄███▓  ▄▄▄       ███▄    █ 
-    ▓██░ ██▒▒████▄     ██ ▀█   █  ██▒ ▀█▒▓██▒▀█▀ ██▒▒████▄     ██ ▀█   █ 
-    ▒██▀▀██░▒██  ▀█▄  ▓██  ▀█ ██▒▒██░▄▄▄░▓██    ▓██░▒██  ▀█▄  ▓██  ▀█ ██▒
-    ░▓█ ░██ ░██▄▄▄▄██ ▓██▒  ▐▌██▒░▓█  ██▓▒██    ▒██ ░██▄▄▄▄██ ▓██▒  ▐▌██▒
-    ░▓█▒░██▓ ▓█   ▓██▒▒██░   ▓██░░▒▓███▀▒▒██▒   ░██▒ ▓█   ▓██▒▒██░   ▓██░
-     ▒ ░░▒░▒ ▒▒   ▓▒█░░ ▒░   ▒ ▒  ░▒   ▒ ░ ▒░   ░  ░ ▒▒   ▓▒█░░ ▒░   ▒ ▒ 
-     ▒ ░▒░ ░  ▒   ▒▒ ░░ ░░   ░ ▒░  ░   ░ ░  ░      ░  ▒   ▒▒ ░░ ░░   ░ ▒░
-     ░  ░░ ░  ░   ▒      ░   ░ ░ ░ ░   ░ ░      ░     ░   ▒      ░   ░ ░ 
-     ░  ░  ░      ░  ░         ░       ░        ░         ░  ░         ░ 
-                                                                         \n\n\n"
+    "                                       *                                                             *
+                          *      ▄█    █▄      ▄████████ ███▄▄▄▄      ▄██████▄    ▄▄▄▄███▄▄▄▄      ▄████████ ███▄▄▄▄         *
+                                ███    ███    ███  * ███ ███▀▀▀██▄   ███    ███ ▄██▀▀▀███▀▀▀██▄   ███    ███ ███▀▀▀██▄ 
+            *                   ███    ███    ███    ███ ███   ███   ███    █▀  ███   ███   ███   ███    ███ ███   ███ *
+                               ▄███▄▄▄▄███▄▄  ███    ███ ███   ███  ▄███        ███   ███   ███   ███    ███ ███ * ███  
+                              ▀▀███▀▀▀▀███▀ ▀███████████ ███   ███ ▀▀███ ████▄  ███   ███   ███ ▀███████████ ███   ███ 
+                                ███    ███    ███    ███ ███   ███   ███    ███ ███   ███   ███   ███*   ███ ███   ███                         *
+                                ███    ███    ███    ███ ███   ███   ███  * ███ ███   ███   ███   ███    ███ ███   ███ 
+                  *             ███ *  █▀     ███    █▀   ▀█   █▀    ████████▀   ▀█   ███   █▀    ███    █▀   ▀█   █▀            *
+                                                            *             \n\n".teal
   end
 
   def introduction
-    
+    "Introduction!\n\n"
   end
 
   def welcome(name)
     "Hello, #{name.bg_blue}!"
   end
 
-  def win(word)
-    puts "Congratulations! You guessed #{word.green}."
+  def feedback(number_wrong, guesses_left, wrong_guesses)
+    puts "Number wrong: #{number_wrong}, guesses left: #{guesses_left}"
+    puts "Wrong guesses: #{wrong_guesses.join(' ').red}"
   end
 
-  def lose(word)
-    puts "You lost! The word was #{word.red}."
+  def win(mode, word)
+    case mode
+    when 1
+      puts "Congratulations! You guessed the word #{word.green}."
+    when 2
+      puts "Congratulations! You guessed the movie #{word.green}."
+    when 3
+      puts "Congratulations! You guessed the name #{word.green}."
+    else
+      puts "You've found a bug! Please report it to the game creator."
+    end
+  end
+
+  def lose(mode, word)
+    case mode
+    when 1
+      puts "You lost! The word was #{word.red}."
+    when 2
+      puts "You lost! The movie was #{word.red}."
+    when 3
+      puts "You lost! The name was #{word.red}."
+    else
+      puts "You've found a bug! Please report it to the game creator."
+    end
   end
 end

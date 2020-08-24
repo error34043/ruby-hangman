@@ -47,7 +47,7 @@ class Gameplay
   def valid_input?(guess)
     if guess.length == 1 && guess.match?(/[A-Z]/)
       if @all_guesses.include? guess
-        puts "\nYou've already guessed that letter!"
+        puts "\nYou've already guessed that letter!\n"
         false
       else
         @all_guesses.push(guess)
@@ -56,7 +56,7 @@ class Gameplay
     elsif guess == 'SAVE'
       true
     else
-      puts "\nPlease enter a single alphabet."
+      puts "\nPlease enter a single alphabet.\n"
       false
     end
   end
@@ -76,7 +76,8 @@ class Gameplay
   def recieve_guess
     pass = false
     while pass == false
-      print "Please enter your guess as a single alphabet: "
+      puts "Please enter your guess as a single alphabet, or enter 'save' to save the game."
+      print "\u00bb".encode.teal + " "
       guess = gets.chomp.upcase.freeze
       pass = valid_input?(guess)
     end
@@ -122,7 +123,7 @@ class Gameplay
   end
 
   def receive_player_name
-    puts "What is your name?"
+    puts "What is your name, brave champion?"
     @player_name = gets.chomp
   end
 
@@ -133,8 +134,7 @@ class Gameplay
     puts image_to_display(@number_wrong)
     puts @blanks.join
     puts "\n"
-    puts "Number wrong: #{@number_wrong}, guesses left: #{@guesses_left}"
-    puts "Wrong guesses: #{@wrong_guesses.join(' ').red}"
+    feedback(@number_wrong, @guesses_left, @wrong_guesses)
   end
 
   def decide_play_mode
@@ -181,9 +181,9 @@ class Gameplay
       @continue = continue_play?
     end
     if @number_wrong == 6
-      lose(@random_word)
+      lose(@mode, @random_word)
     else
-      win(@random_word)
+      win(@mode, @random_word)
     end
   end
 end
