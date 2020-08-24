@@ -53,6 +53,8 @@ class Gameplay
         @all_guesses.push(guess)
         true
       end
+    elsif guess == 'SAVE'
+      true
     else
       puts "\nPlease enter a single alphabet."
       false
@@ -62,6 +64,8 @@ class Gameplay
   def check_guess(guess)
     if @random_word_array.include? guess
       blanks_per_turn(guess)
+    elsif guess == 'SAVE'
+      save_game
     else
       @number_wrong += 1
       @wrong_guesses.push(guess)
@@ -160,7 +164,7 @@ class Gameplay
     end
   end
 
-  def start
+  def new_game_start
     receive_player_name
     puts welcome(@player_name)
     decide_play_mode
@@ -169,5 +173,17 @@ class Gameplay
     puts blanks_on_start.join
     puts "\n"
     continue_play?
+  end
+
+  def play_game
+    while @continue
+      turn
+      @continue = continue_play?
+    end
+    if @number_wrong == 6
+      lose(@random_word)
+    else
+      win(@random_word)
+    end
   end
 end
