@@ -73,7 +73,7 @@ class Gameplay
     guesses_remaining_count
   end
 
-  def recieve_guess
+  def receive_guess
     pass = false
     while pass == false
       puts "Please enter your guess as a single alphabet, or enter 'save' to save the game."
@@ -128,7 +128,7 @@ class Gameplay
   end
 
   def turn
-    guess = recieve_guess
+    guess = receive_guess
     check_guess(guess)
     puts "\n\n\n"
     puts image_to_display(@number_wrong)
