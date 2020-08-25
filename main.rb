@@ -49,7 +49,7 @@ class Game < Gameplay
 
   def save_game
     File.open('saved.txt', 'w') { |file| file.puts serialize }
-    puts "The game has been saved!"
+    puts "\nThe game has been saved!\n\n"
     exit
   end
 
@@ -62,6 +62,9 @@ class Game < Gameplay
       puts @blanks.join
       puts "\n"
       feedback(@number_wrong, @guesses_left, @wrong_guesses)
+    else
+      puts "\nI'm sorry, Explorer, I don't recognize you. You will have to start anew."
+      @continue = new_game_start
     end
   end
 end
