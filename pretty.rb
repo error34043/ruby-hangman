@@ -122,41 +122,41 @@ module Instructable
   end
 
   def introduction
-    "Introduction!\n\n"
+    "Your spaceship crashed on the Planet Xnathax 10 days ago. You don't really know how you got yourself caught up in a save-the-planet scheme so quick.\nYou also don't quite remember how you ended up at a killer robot's assembly plant with the fate of the planet resting on your shoulders.\nIt all happened so fast!\n\nWhat you" + " do ".red + "know is that you need to guess the password to the Big Bad's computer.\nIf you don't, he'll complete the construction of his mechadroid and rain destruction over the planet.\nEvery wrong guess brings his plan one step closer to completion, so watch out.\n\n"
   end
 
   def welcome(name)
-    "Hello, #{name.bg_blue}!"
+    "\nHello, " + "Explorer #{name}!".bg_blue + "\nYour comarades have informed you that Big Bad's password is a single word.\nIt is either a random word, a movie name, or a person's name.\nWhich do you think it is?"
   end
 
   def feedback(number_wrong, guesses_left, wrong_guesses)
-    puts "Number wrong: #{number_wrong}, guesses left: #{guesses_left}"
+    puts "#{number_wrong.to_s.red} part(s) of the mechadroid have been assembled."
     puts "Wrong guesses: #{wrong_guesses.join(' ').red}"
   end
 
   def win(mode, word)
     case mode
     when 1
-      puts "Congratulations! You guessed the word #{word.green}."
+      puts "\nCongratulations! You guessed the word #{word.green}. Xnathax is saved.\n\n"
     when 2
-      puts "Congratulations! You guessed the movie #{word.green}."
+      puts "\nCongratulations! You guessed the movie #{word.green}. Xnathax is saved.\n\n"
     when 3
-      puts "Congratulations! You guessed the name #{word.green}."
+      puts "\nCongratulations! You guessed the name #{word.green}. Xnathax is saved.\n\n"
     else
-      puts "You've found a bug! Please report it to the game creator."
+      puts "\nYou've found a bug! Please report it to the game creator.\n\n"
     end
   end
 
   def lose(mode, word)
     case mode
     when 1
-      puts "You lost! The word was #{word.red}."
+      puts "\nOh no! The word was #{word.red}. The mechadroid is fully assembled and Xnathax will soon burn.\n\n"
     when 2
-      puts "You lost! The movie was #{word.red}."
+      puts "\nOh no! The movie was #{word.red}. The mechadroid is fully assembled and Xnathax will soon burn.\n\n"
     when 3
-      puts "You lost! The name was #{word.red}."
+      puts "\nOh no! The name was #{word.red}. The mechadroid is fully assembled and Xnathax will soon burn.\n\n"
     else
-      puts "You've found a bug! Please report it to the game creator."
+      puts "\nYou've found a bug! Please report it to the game creator.\n\n"
     end
   end
 end

@@ -123,7 +123,7 @@ class Gameplay
   end
 
   def receive_player_name
-    puts "What is your name, brave champion?"
+    puts "\nWhat is your name, brave champion?"
     @player_name = gets.chomp
   end
 
@@ -135,11 +135,11 @@ class Gameplay
     puts @blanks.join
     puts "\n"
     feedback(@number_wrong, @guesses_left, @wrong_guesses)
+    puts ''
   end
 
   def decide_play_mode
-    puts "Would you like to guess a random word or the title of movie?"
-    puts "1. Random word"
+    puts "\n1. Random word"
     puts "2. Title of a movie"
     puts "3. Name of a person"
     loop do
@@ -168,6 +168,8 @@ class Gameplay
     receive_player_name
     puts welcome(@player_name)
     decide_play_mode
+    puts "\nYou were right! The password hint on the laptop agrees with you."
+    puts "Time to work on cracking the password itself."
     @guesses_left = @random_word.length
     puts image_to_display(0)
     puts blanks_on_start.join

@@ -57,7 +57,7 @@ class Game < Gameplay
     if File.exist?'saved.txt'
       saved_game = File.read 'saved.txt'
       unserialize(saved_game)
-      puts "Welcome back, #{@player_name}!\n\n"
+      puts "\nWelcome back, " + "Explorer #{@player_name}".bg_blue + "! Time to save the planet.\n\n"
       puts image_to_display(@number_wrong)
       puts @blanks.join
       puts "\n"
